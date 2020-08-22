@@ -3,6 +3,7 @@ package com.example.apiproject;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,26 +19,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
         getData();
-
-
 
     }
 
-    public void getData(){
+    public void getData() {
 
-        MyInterface myInterface = MyInterface.retrofit.create(MyInterface.class);
-        Call<List<Post>> call = myInterface.getPosts();
-        call.enqueue(new Callback<List<Post>>() {
+        MyInterface myInterface = APIClient.getClient().create(MyInterface.class);
+        myInterface.getPosts().enqueue(new Callback<List<Post>>() {
             @Override
             public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
-
                 if (response.isSuccessful()) {
-
-
-
                     for (Post post : response.body()) {
                         showData(post);
                     }
@@ -51,11 +43,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-private void showData(Post post){
-    TextView data = findViewById(R.id.data);
-    data.append("userid: "+post.getUserId()+"/n");
-    data.append("id: "+post.getId()+"/n");
-    data.append("tittle: "+post.getTitle()+"/n");
-    data.append("body: "+post.getBody()+"/n");
-}
+    private void showData(Post post) {
+        TextView data = findViewById(R.id.data);
+        data.append("userid: " + post.getUserId() + "/n");
+        data.append("id: " + post.getId() + "/n");
+        data.append("tittle: " + post.getTitle() + "/n");
+        data.append("body: " + post.getBody() + "/n");
+    }
 }

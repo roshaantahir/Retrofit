@@ -8,12 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 
 public interface MyInterface {
-    String BASE_URL = "https://jsonplaceholder.typicode.com/";
-    String FEED = "posts";
-    Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build();
-    @GET(FEED)
+
+    @GET("posts")
     Call<List<Post>> getPosts();
 }
